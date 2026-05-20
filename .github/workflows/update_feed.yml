@@ -1,35 +1,34 @@
 name: Update Anthropic RSS
 
-    on:
-      schedule:
-        - cron: '0 8 * * *' # Runs daily at 8:00 AM UTC
-      workflow_dispatch: # Allows you to trigger it manually
+"on":
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch: {}
 
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-          - name: Checkout repository
-            uses: actions/checkout@v4
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-          - name: Set up Python
-            uses: actions/setup-python@v5
-            with:
-              python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-          - name: Install dependencies
-            run: |
-              pip install -r requirements.txt
-              playwright install chromium
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install chromium
 
-          - name: Run scraper
-            run: python scraper.py
+      - name: Run scraper
+        run: python scraper.py
 
-          - name: Commit and push new feed
-            run: |
-              git config --global user.name 'github-actions[bot]'
-              git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-              git add anthropic_feed.xml
-              # The '|| exit 0' prevents the action from failing if the feed hasn't changed
-              git commit -m "Auto-update Anthropic RSS feed" || exit 0
-              git push
+      - name: Commit and push new feed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add anthropic_feed.xml
+          git commit -m "Auto-update Anthropic RSS feed" || exit 0
+          git push
