@@ -9,7 +9,7 @@ Inoreader subscribes to the raw GitHub URL.
 
 ## Step 1: GitHub
 
-1. Fork `0xSMW/rss-feeds` (or use your own repo)
+1. Create a repo
 2. Create a Personal Access Token:
    - GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens
    - Permissions: **Contents** → Read and write
@@ -29,7 +29,7 @@ Inoreader subscribes to the raw GitHub URL.
 |---|---|
 | `GITHUB_TOKEN` | Your GitHub PAT from Step 1 |
 | `GITHUB_OWNER` | Your GitHub username |
-| `GITHUB_REPO` | `rss-feeds` (or your repo name) |
+| `GITHUB_REPO` | Your repo name |
 | `GITHUB_PATH` | `feeds/feed_anthropic_engineering.xml` |
 | `SECRET_TOKEN` | Any random string, e.g. `myrandomsecret123` |
 
