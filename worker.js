@@ -162,8 +162,15 @@ async function getExistingFeed(env) {
   if (res.status === 404) return { sha: null, xml: null };
   if (!res.ok) throw new Error(`GitHub GET ${res.status}`);
   const data = await res.json();
-  const xml = atob(data.content.replace(/\n/g, ""));
-  return { sha: data.sha, xml };
+  // Always capture sha — required by GitHub API when updating an existing file
+  const sha = data.sha;
+  let xml = null;
+  try {
+    xml = atob(data.content.replace(/\n/g, ""));
+  } catch (e) {
+    // File exists but content unreadable — sha still needed to overwrite it
+  }
+  return { sha, xml };
 }
 
 async function commitFeed(env, xml, sha) {
